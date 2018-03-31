@@ -1,3 +1,1 @@
-hello world
-
-test test
+백준 알고리즘 문제 풀기, 연습용
