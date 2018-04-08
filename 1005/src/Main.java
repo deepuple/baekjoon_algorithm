@@ -19,12 +19,14 @@ public class Main {
         for(int i =0 ; i<cases; ++i){
             st = new StringTokenizer(br.readLine());
             v = Integer.parseInt(st.nextToken());
+
             build_time = new int[v+1];
             build_time_total = new int[v+1];
             boolean[] dep_building = new boolean[v+1];
             node =  new ArrayList[v+1];
             for(int m = 1 ; m <= v ; ++m)
                 node[m] = new ArrayList<Integer>();
+
             int node_num = Integer.parseInt(st.nextToken());
 
             st = new StringTokenizer(br.readLine());
