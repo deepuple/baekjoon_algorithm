@@ -23,6 +23,8 @@ public class Main {
         Arrays.fill(v, false);
         perm(n, r);
 
+        System.out.println("---------");
+
         Arrays.fill(prt, 0);
         Arrays.fill(v, false);
         comb(n, r);
