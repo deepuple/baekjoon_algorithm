@@ -19,12 +19,12 @@ class Main{
 	static int cal(int[][] in, int length, int depth){
 		int ret = 0;
 
-		if(depth>=length)
+		if(depth>length)
 			return ret;
 
 		for(int i = depth ; i < length ; ++ i){
-			if(depth +  in[i][0] < length){
-				int cal  = in[i][1]+cal(in, length, depth+in[i][0]);
+			if(i +  in[i][0] <= length){
+				int cal  = in[i][1]+cal(in, length, i+in[i][0]);
 				ret = Math.max(ret, cal);
 			}
 		}
