@@ -23,7 +23,7 @@ class Main{
 			return ret;
 
 		for(int i = depth ; i < length ; ++ i){
-			if(depth +  in[i][0]< length){
+			if(depth +  in[i][0] < length){
 				int cal  = in[i][1]+cal(in, length, depth+in[i][0]);
 				ret = Math.max(ret, cal);
 			}
