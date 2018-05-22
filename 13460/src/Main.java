@@ -50,7 +50,7 @@ public class Main {
                 int[] dy = {0,1,0,-1};
 
                 for(int j = 0 ; j < 4 ; ++j){
-                    String status="";//RB, BR, G, OB
+                    String status="";
                     int n_r_x = r_x;
                     int n_r_y = r_y;
                     int n_b_x = b_x;
@@ -59,70 +59,66 @@ public class Main {
                     while(map[n_r_y][n_r_x]!='#'){ //끝까지 이동
                         n_r_x = n_r_x + dx[j];
                         n_r_y = n_r_y + dy[j];
-                        if(n_r_x == b_x && n_r_y == b_y && !status.equals("G")) //골에 지나가지 않았고, 푸른색 구슬을 만난경우
-                            status = "BR";
-                        if(map[n_r_y][n_r_x] == 'O') { //골을 지나간 경우
-                            if (status.equals("BR")) //푸른 색을 먼저 지난경우
-                                status = "OB"; //푸른색이 먼저 도달함
-                            else
-                                status = "G"; //붉은색이 먼저 도달함
+                        if(n_r_x == b_x && n_r_y == b_y)
+                            status = status+"B";
+                        if(map[n_r_y][n_r_x] == 'O') {
+                            status = status+"O";
                         }
+                    }//BO(OBR), OB(BOR), O(ORB), B(BRO), nothing(RBO,ROB);
+                    //O(OR), B(BR)
+                    //nothing(R)
 
-                    }
                     n_r_x = n_r_x - dx[j];
                     n_r_y = n_r_y - dy[j];
 
-                    if(n_r_x != r_x || n_r_y != r_y) {
-                        while (map[n_b_y][n_b_x] != '#') {
-                            n_b_x = n_b_x + dx[j];
-                            n_b_y = n_b_y + dy[j];
-                            if (r_x == n_b_x && r_y == n_b_y && !status.equals("OB")) //골에 지나가지 않았고, 붉은 색을 만난경우
-                                status = "RB";
-                            if (map[n_b_y][n_b_x] == 'O') { //골을 지나간 경우
-                                status = "OB"; //푸른색이 먼저 도달함
-                            }
+                    while (map[n_b_y][n_b_x] != '#') {
+                        n_b_x = n_b_x + dx[j];
+                        n_b_y = n_b_y + dy[j];
+                        if (r_x == n_b_x && r_y == n_b_y)
+                            status = "RB";//nothing(RBO)
+                        if (map[n_b_y][n_b_x] == 'O') {
+                            status = "F";//BO(OBR), O(ORB), nothing(ROB)
                         }
+                    }//OB(BOR), B(BRO,BR), O(OR), nothing(R)
+
+                    n_b_x = n_b_x - dx[j];
+                    n_b_y = n_b_y - dy[j];
+
+                    if (status.equals("RB")) {
                         n_b_x = n_b_x - dx[j];
                         n_b_y = n_b_y - dy[j];
+                        if(r_x!=n_r_x || r_y!=n_r_y || b_x!=n_b_x || b_y!=n_b_y) {
+                            q.offer(n_r_x);
+                            q.offer(n_r_y);
+                            q.offer(n_b_x);
+                            q.offer(n_b_y);
+                        }
 
-                        if (status.equals("RB")) {
-                            n_b_x = n_b_x - dx[j];
-                            n_b_y = n_b_y - dy[j];
-                            if (map[n_r_y][n_r_x] != 'R') {
-                                q.offer(n_r_x);
-                                q.offer(n_r_y);
-                                q.offer(n_b_x);
-                                q.offer(n_b_y);
-                                map[n_r_y][n_r_x] = 'R';
-                            }
-                        } else if (status.equals("BR")) {
-                            n_r_x = n_r_x - dx[j];
-                            n_r_y = n_r_y - dy[j];
-                            if (map[n_r_y][n_r_x] != 'R') {
-                                q.offer(n_r_x);
-                                q.offer(n_r_y);
-                                q.offer(n_b_x);
-                                q.offer(n_b_y);
-                                map[n_r_y][n_r_x] = 'R';
-                            }
-                        } else if (status.equals("OB")) {
-                            //do nothing;
-                        } else if (status.equals("G")) {
-                            return cnt+1;
-                        } else {
-                            if (map[n_r_y][n_r_x] != 'R') {
-                                q.offer(n_r_x);
-                                q.offer(n_r_y);
-                                q.offer(n_b_x);
-                                q.offer(n_b_y);
-                                map[n_r_y][n_r_x] = 'R';
-                            }
+                    } else if (status.equals("B")) {
+                        n_r_x = n_r_x - dx[j];
+                        n_r_y = n_r_y - dy[j];
+                        if(r_x!=n_r_x || r_y!=n_r_y || b_x!=n_b_x || b_y!=n_b_y) {
+                            q.offer(n_r_x);
+                            q.offer(n_r_y);
+                            q.offer(n_b_x);
+                            q.offer(n_b_y);
+                        }
+                    } else if (status.equals("OB") || status.equals("O")) {
+                        return cnt+1;
+                    } else if (status.equals("F")) {
+                        //do nothing;
+                    } else {
+                        if(r_x!=n_r_x || r_y!=n_r_y || b_x!=n_b_x || b_y!=n_b_y) {
+                            q.offer(n_r_x);
+                            q.offer(n_r_y);
+                            q.offer(n_b_x);
+                            q.offer(n_b_y);
                         }
                     }
                 }
             }
             cnt++;
-            
+
             if(cnt>10)
                 return -1;
         }
