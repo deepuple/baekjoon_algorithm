@@ -19,11 +19,9 @@ public class Main {
                 if (in[j] == 'R') {
                     ry = i;
                     rx = j;
-                    map[i][j] = 'R';
                 }else if(in[j] =='B'){
                     by = i;
                     bx = j;
-                    map[i][j] = '.';
                 }else
                     map[i][j] = in[j];
             }
@@ -59,14 +57,12 @@ public class Main {
                     while(map[n_r_y][n_r_x]!='#'){ //끝까지 이동
                         n_r_x = n_r_x + dx[j];
                         n_r_y = n_r_y + dy[j];
-                        if(n_r_x == b_x && n_r_y == b_y)
-                            status = status+"B";
+                        if(n_r_x == b_x && n_r_y == b_y && !status.equals("P"))
+                            status = "BR";
                         if(map[n_r_y][n_r_x] == 'O') {
-                            status = status+"O";
+                            status = "P";
                         }
-                    }//BO(OBR), OB(BOR), O(ORB), B(BRO), nothing(RBO,ROB);
-                    //O(OR), B(BR)
-                    //nothing(R)
+                    }
 
                     n_r_x = n_r_x - dx[j];
                     n_r_y = n_r_y - dy[j];
@@ -74,12 +70,12 @@ public class Main {
                     while (map[n_b_y][n_b_x] != '#') {
                         n_b_x = n_b_x + dx[j];
                         n_b_y = n_b_y + dy[j];
-                        if (r_x == n_b_x && r_y == n_b_y)
-                            status = "RB";//nothing(RBO)
+                        if (r_x == n_b_x && r_y == n_b_y && !status.equals("F"))
+                            status = "RB";
                         if (map[n_b_y][n_b_x] == 'O') {
-                            status = "F";//BO(OBR), O(ORB), nothing(ROB)
+                            status = "F";
                         }
-                    }//OB(BOR), B(BRO,BR), O(OR), nothing(R)
+                    }
 
                     n_b_x = n_b_x - dx[j];
                     n_b_y = n_b_y - dy[j];
@@ -94,7 +90,7 @@ public class Main {
                             q.offer(n_b_y);
                         }
 
-                    } else if (status.equals("B")) {
+                    } else if (status.equals("BR")) {
                         n_r_x = n_r_x - dx[j];
                         n_r_y = n_r_y - dy[j];
                         if(r_x!=n_r_x || r_y!=n_r_y || b_x!=n_b_x || b_y!=n_b_y) {
@@ -103,7 +99,7 @@ public class Main {
                             q.offer(n_b_x);
                             q.offer(n_b_y);
                         }
-                    } else if (status.equals("OB") || status.equals("O")) {
+                    } else if (status.equals("P")) {
                         return cnt+1;
                     } else if (status.equals("F")) {
                         //do nothing;
