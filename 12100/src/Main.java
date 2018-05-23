@@ -32,7 +32,7 @@ public class Main {
 		int[] tmp = new int[n];
 		
 		for(int i = 0 ; i < n ; ++i) { //다섯개 줄에 대해..
-			if(cmd==0) {//왼쪽 밀
+			if(cmd==0) { //왼쪽 밀
 				for(int j = 0 ; j < n ; ++j) {
 					tmp[j] = in[i][j];	
 				}
@@ -48,7 +48,7 @@ public class Main {
 				}
 				
 			}
-			else if(cmd==1) {//위 밀
+			else if(cmd==1) { //위 밀
 				for(int j = 0 ; j < n ; ++j) {
 					tmp[j] = in[j][i];	
 				}
@@ -63,7 +63,7 @@ public class Main {
 					ret[l][i] = tmp[l];	
 				}
 			}
-			else if(cmd==2) {//오 밀
+			else if(cmd==2) { //오 밀
 				for(int j = 0 ; j < n ; ++j) {
 					tmp[j] = in[i][n-1-j];	
 				}
@@ -78,7 +78,7 @@ public class Main {
 					ret[i][n-1-l] = tmp[l];	
 				}
 			}
-			else if(cmd==3) {//아 밀
+			else if(cmd==3) { //아 밀
 				for(int j = 0 ; j < n ; ++j) {
 					tmp[j] = in[n-1-j][i];	
 				}
@@ -121,6 +121,5 @@ public class Main {
 				ret = Math.max(ret, in[i][j]);
 		
 		return ret;
-		
 	}
 }
