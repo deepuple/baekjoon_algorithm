@@ -3,14 +3,7 @@ import java.util.*;
 class Main{
 	static int[][] map;
 	static int n, m, x, y;
-	static int[][] dice = {{0,0,0,0,0,0},
-			{0,6,2,3,5,4},
-			{0,5,6,3,1,4},
-			{0,4,2,6,5,1},
-			{0,3,2,1,5,6},
-			{0,2,1,3,6,4},
-			{0,1,5,3,2,4}};
-	static int base = 6;
+	static int[] dice = {0,0,0,0,0,0,0};
 
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
@@ -46,25 +39,41 @@ class Main{
 		x = nx;
 		y = ny;
 
-		if(cmd==1)
-			cmd = 3;
-		else if(cmd==2)
-			cmd = 5;
-		else if(cmd==3)
-			cmd = 2;
-		else
-			cmd = 4;
-
 		int map_v = map[x][y];
-		base = dice[base][cmd];
+		change_dice(dice,cmd);
 		if(map_v!=0){
-			dice[base][0] = map_v;
+			dice[6] = map_v;
 			map[x][y] = 0;
 		}
 		else
-			map[x][y] = dice[base][0];
+			map[x][y] = dice[6];
 
-		int top = dice[base][1];
-		return dice[top][0];
+		return dice[1];
 	}
+	static void change_dice(int[] dice, int cmd){
+	    int[] temp = dice.clone();
+
+	    if(cmd==1){
+            dice[1] = temp[4];
+            dice[3] = temp[1];
+            dice[4] = temp[6];
+            dice[6] = temp[3];
+        }else if(cmd==2){
+            dice[1] = temp[3];
+            dice[3] = temp[6];
+            dice[4] = temp[1];
+            dice[6] = temp[4];
+        }else if(cmd==3){
+            dice[1] = temp[5];
+            dice[2] = temp[1];
+            dice[5] = temp[6];
+            dice[6] = temp[2];
+        }else{
+            dice[1] = temp[2];
+            dice[2] = temp[6];
+            dice[5] = temp[1];
+            dice[6] = temp[5];
+        }
+    }
 }
+
