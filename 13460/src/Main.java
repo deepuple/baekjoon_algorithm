@@ -27,6 +27,7 @@ public class Main {
             }
         }
         System.out.println(BFS(rx, ry, bx, by));
+        sc.close();
     }
 
     static int BFS(int rx, int ry, int bx, int by){
@@ -54,7 +55,7 @@ public class Main {
                     int n_b_x = b_x;
                     int n_b_y = b_y;
 
-                    while(map[n_r_y][n_r_x]!='#'){ //끝까지 이동
+                    while(map[n_r_y][n_r_x] != '#'){ //끝까지 이동
                         n_r_x = n_r_x + dx[j];
                         n_r_y = n_r_y + dy[j];
                         if(n_r_x == b_x && n_r_y == b_y && !status.equals("P"))
@@ -115,7 +116,7 @@ public class Main {
             }
             cnt++;
 
-            if(cnt>10)
+            if(cnt>=10)
                 return -1;
         }
         return -1;
