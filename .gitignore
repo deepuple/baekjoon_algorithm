@@ -1,4 +1,11 @@
 .idea
 .DS_Store
-.class
-.iml
+*.class
+*.iml
+.gitignore
+.settings
+.project
+.classpath
+/.metadata/
+/.recommenders/
+bin
