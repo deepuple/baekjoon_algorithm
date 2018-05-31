@@ -70,6 +70,7 @@ public class Main {
             comb[depth] = 0;
             ret = Math.min(ret, makeComb(depth - 1));
         }
+
         return ret;
     }
 
@@ -86,6 +87,7 @@ public class Main {
         int nIdx = 0;
         for(int i = 0 ; i< rows ; i++) {
             for (int j = 0; j < cols; j++) {
+
                 if(temp[i][j]==1){
                     if(comb[nIdx]==0) {
                         int cursor = j;
@@ -113,6 +115,7 @@ public class Main {
                         }
                     }
                     nIdx++;
+
                 }else if(temp[i][j]==2){
                     if(comb[nIdx]==0) {
                         int cursor = j;
@@ -138,8 +141,9 @@ public class Main {
                         }
                     }
                     nIdx++;
+
                 }else if(temp[i][j]==3){
-                    if(comb[nIdx]==0) { //ㄴ
+                    if(comb[nIdx]==0) { //|-
                         int cursor = j;
                         while (temp[i][cursor++]!=6 && cursor < cols){
                             if(temp[i][cursor]==0)
@@ -161,7 +165,7 @@ public class Main {
                             if(temp[cursor][j]==0)
                                 temp[cursor][j]=9;
                         }
-                    }else if(comb[nIdx]==2) { //|-
+                    }else if(comb[nIdx]==2) { //ㄴ
                         int cursor = j;
                         while (temp[i][cursor++]!=6 && cursor < cols){
                             if(temp[i][cursor]==0)
@@ -185,6 +189,7 @@ public class Main {
                         }
                     }
                     nIdx++;
+
                 }else if(temp[i][j]==4){
                     if(comb[nIdx]==0) { // ㅜ
                         int cursor = j;
@@ -192,15 +197,15 @@ public class Main {
                             if(temp[i][cursor]==0)
                                 temp[i][cursor]=9;
                         }
-                        cursor = i;
-                        while (temp[cursor++][j]!=6 && cursor < rows){
-                            if(temp[cursor][j]==0)
-                                temp[cursor][j]=9;
-                        }
                         cursor = j;
                         while (temp[i][cursor--]!=6 && cursor >= 0 ){
                             if(temp[i][cursor]==0)
                                 temp[i][cursor]=9;
+                        }
+                        cursor = i;
+                        while (temp[cursor++][j]!=6 && cursor < rows){
+                            if(temp[cursor][j]==0)
+                                temp[cursor][j]=9;
                         }
                     }else if(comb[nIdx]==1) { //ㅓ
                         int cursor = j;
@@ -219,12 +224,7 @@ public class Main {
                                 temp[cursor][j]=9;
                         }
                     }else if(comb[nIdx]==2) {//ㅗ
-                        int cursor = i;
-                        while (temp[cursor++][j]!=6 && cursor < rows){
-                            if(temp[cursor][j]==0)
-                                temp[cursor][j]=9;
-                        }
-                        cursor = j;
+                        int cursor = j;
                         while (temp[i][cursor--]!=6 && cursor >= 0 ){
                             if(temp[i][cursor]==0)
                                 temp[i][cursor]=9;
@@ -234,16 +234,21 @@ public class Main {
                             if(temp[i][cursor]==0)
                                 temp[i][cursor]=9;
                         }
-                    }else if(comb[nIdx]==3) {//ㅏ
-                        int cursor = i;
+                        cursor = i;
                         while (temp[cursor--][j]!=6 && cursor >= 0 ){
                             if(temp[cursor][j]==0)
                                 temp[cursor][j]=9;
                         }
-                        cursor = j;
+                    }else if(comb[nIdx]==3) {//ㅏ
+                        int cursor = j;
                         while (temp[i][cursor++]!=6 && cursor < cols){
                             if(temp[i][cursor]==0)
                                 temp[i][cursor]=9;
+                        }
+                        cursor = i;
+                        while (temp[cursor--][j]!=6 && cursor >= 0 ){
+                            if(temp[cursor][j]==0)
+                                temp[cursor][j]=9;
                         }
                         cursor = i;
                         while (temp[cursor++][j]!=6 && cursor < rows){
@@ -252,6 +257,7 @@ public class Main {
                         }
                     }
                     nIdx++;
+
                 }else if(temp[i][j]==5){
                     int cursor = i;
                     while (temp[cursor--][j] != 6 && cursor >= 0) {
