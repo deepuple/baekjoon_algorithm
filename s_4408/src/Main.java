@@ -17,32 +17,45 @@ public class Main {
 			for(int j = 0 ; j < stu_num ; j++) {
 				int from = sc.nextInt();
 				int to = sc.nextInt();
-				
+					
 				gugan[j][0] = corri(from);
 				gugan[j][1] = corri(to);
 			}
 			
-			System.out.println("#"+i+" "+check(gugan, stu_num));
+			System.out.println("#"+(i+1)+" "+check(gugan, stu_num));
 		}
 		sc.close();
 	}
 	
 	static int check(int[][] in, int nums) {
-		int max = 0;
-
-		for(int i = 0 ; i<nums ; i++) {
-			int cnt = 0;
+		int cnt = 0;
+		boolean[] v= new boolean[nums];
+ 		for(int i = 0 ; i<nums ; i++) {
+ 			cnt++;
+ 			v[i] = true;
 			for(int j = 0 ; j<nums ; j++) {
 				if(i != j) {
-					if(in[j][0] >= in[i][0] && in[j][0] <= in[i][1])
-						cnt++;
-					else if(in[j][1] >= in[i][0] && in[j][1] <= in[i][1])
-						cnt++;
+					if(in[i][0] >= in[j][0] && in[i][0] <= in[j][1]) {
+					}else if(in[i][1] >= in[j][0] && in[i][1] <= in[j][1]) {
+					}else if(in[i][0] <= in[j][0] && in[i][1] >= in[j][1]) {
+					}else {
+						v[j] = true;
+					}	
 				}
+				if(complete(v))
+					return cnt;
 			}
-			max = Math.max(max, cnt);
 		}
-		return max+1;
+ 		return cnt;
+	}
+	
+	static boolean complete(boolean[] in) {
+		boolean ret = true;
+		for(int k = 0 ; k<in.length ; k++) {
+			if(!in[k])
+				return false;
+		}
+		return ret;
 	}
 	
 	static int corri(int room_num) {
