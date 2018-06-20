@@ -17,7 +17,13 @@ public class Main {
 			for(int j = 0 ; j < stu_num ; j++) {
 				int from = sc.nextInt();
 				int to = sc.nextInt();
-					
+				
+				if(from>to){
+					int tmp = from;
+					from = to;
+					to = tmp;
+				}
+				
 				gugan[j][0] = corri(from);
 				gugan[j][1] = corri(to);
 			}
@@ -43,9 +49,9 @@ public class Main {
 						v[j] = true; //delete same timeline;
 					}	
 				}
-				if(complete(v))
-					return cnt;
  			}
+			if(complete(v))
+				return cnt;
 		}
  		return cnt;
 	}
