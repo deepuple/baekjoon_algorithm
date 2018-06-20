@@ -30,21 +30,22 @@ public class Main {
 	static int check(int[][] in, int nums) {
 		int cnt = 0;
 		boolean[] v= new boolean[nums];
+		
  		for(int i = 0 ; i<nums ; i++) {
  			cnt++;
- 			v[i] = true;
-			for(int j = 0 ; j<nums ; j++) {
-				if(i != j) {
+ 			if(!v[i]) {
+ 				v[i] = true;
+				for(int j = i ; j<nums ; j++) {
 					if(in[i][0] >= in[j][0] && in[i][0] <= in[j][1]) {
 					}else if(in[i][1] >= in[j][0] && in[i][1] <= in[j][1]) {
 					}else if(in[i][0] <= in[j][0] && in[i][1] >= in[j][1]) {
 					}else {
-						v[j] = true;
+						v[j] = true; //delete same timeline;
 					}	
 				}
 				if(complete(v))
 					return cnt;
-			}
+ 			}
 		}
  		return cnt;
 	}
