@@ -33,51 +33,22 @@ public class Main {
 		sc.close();
 	}
 	
-	static int check(int[][] in, int nums) {
-		int cnt = 0;
-		boolean[] v= new boolean[nums];
-		
- 		for(int i = 0 ; i<nums ; i++) {
- 			if(!v[i]) {
- 	 			cnt++;
- 				v[i] = true;//select
- 				boolean[] check = new boolean[200];
- 				
- 				for(int k = in[i][0] ; k<=in[i][1] ; ++k) {
- 					check[k] = true;
- 				}
- 				
-				for(int j = i ; j<nums ; j++) {
-					boolean isSp = true;
-					for(int l = in[j][0] ; l <= in[j][1]; ++l) {
-						if(check[l])
-							isSp = false;
-					}
-					
-					if(isSp) {
-						v[j] = true; //delete same timeline;
-						for(int k = in[j][0] ; k<=in[j][1] ; ++k) {
-		 					check[k] = true;
-		 				}
-					}	
-				}
- 			}
-			if(complete(v))
-				return cnt;
+	static int check(int[][] in, int nums) { 
+		int max = 0; 
+		int[] cnt= new int[200]; 
+		for(int i = 0 ; i<nums ; i++) { 
+			for(int j = in[i][0] ; j<=in[i][1];j++)
+				cnt[j]++;
+		} 
+
+		for (int i = 0 ;i<200;++i){
+			if(max<cnt[i])
+				max = cnt[i];
 		}
- 		return cnt;
-	}
-	
-	static boolean complete(boolean[] in) {
-		boolean ret = true;
-		for(int k = 0 ; k<in.length ; k++) {
-			if(!in[k])
-				return false;
-		}
-		return ret;
-	}
-	
-	static int corri(int room_num) {
-		return (room_num-1)/2;
-	}
+		return max; 
+ 	} 
+
+ 	static int corri(int room_num) { 
+ 		return (room_num-1)/2; 
+ 	} 
 }
