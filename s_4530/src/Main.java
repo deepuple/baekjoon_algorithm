@@ -8,15 +8,21 @@ public class Main {
 		long a = sc.nextLong();
 		long b = sc.nextLong();
 		
-		long diff = b-a;
-		if(a<0&&b>0)
-			diff--;
-		
-		long ret = calc(diff);
+		long ret = calc(b)-calc(a);
+		if(ret<0)
+			ret *= -1;
 		System.out.println(ret);
+		
+		sc.close();
 	}
-	static long calc(long in) {
+	
+	static long calc(long a) {
 		long ret = 0;
+		long in = a;
+		
+		if(a<0)
+			in *= -1;
+		
 		int depth = 0;
 		while(in>0) {
 			long check = in % 10;
@@ -27,6 +33,12 @@ public class Main {
 			in = in/10;
 			depth++;
 		}
+		
+		if (a<0)
+			ret *= -1;
+		else
+			ret--;
+		
 		return ret;
 	}
 }
