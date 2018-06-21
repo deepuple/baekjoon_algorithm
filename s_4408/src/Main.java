@@ -32,15 +32,27 @@ public class Main {
 		boolean[] v= new boolean[nums];
 		
  		for(int i = 0 ; i<nums ; i++) {
- 			cnt++;
  			if(!v[i]) {
- 				v[i] = true;
+ 	 			cnt++;
+ 				v[i] = true;//select
+ 				boolean[] check = new boolean[200];
+ 				
+ 				for(int k = in[i][0] ; k<=in[i][1] ; ++k) {
+ 					check[k] = true;
+ 				}
+ 				
 				for(int j = i ; j<nums ; j++) {
-					if(in[i][0] >= in[j][0] && in[i][0] <= in[j][1]) {
-					}else if(in[i][1] >= in[j][0] && in[i][1] <= in[j][1]) {
-					}else if(in[i][0] <= in[j][0] && in[i][1] >= in[j][1]) {
-					}else {
+					boolean isSp = true;
+					for(int l = in[j][0] ; l <= in[j][1]; ++l) {
+						if(check[l])
+							isSp = false;
+					}
+					
+					if(isSp) {
 						v[j] = true; //delete same timeline;
+						for(int k = in[j][0] ; k<=in[j][1] ; ++k) {
+		 					check[k] = true;
+		 				}
 					}	
 				}
 				if(complete(v))
