@@ -3,6 +3,7 @@
 *.class
 *.iml
 *.exe
+*.out
 .gitignore
 .settings
 .project
