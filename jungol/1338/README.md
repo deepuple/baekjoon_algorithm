@@ -1,10 +1,10 @@
 1338: 문자삼각형 1
 
-'        A
-'      B F
-'    C G J
-'  D H K M
-'E I L N O
+            A
+          B F
+        C G J
+      D H K M
+    E I L N O
 
   행(i) 열(j)
 A: 1~1, 5~5 
