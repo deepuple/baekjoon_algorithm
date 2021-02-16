@@ -2,24 +2,24 @@
 
 using namespace std;
 
-int N;
+int i, j, k, n;
 char arr[101][101] = {0};
 
 int main(){
-    cin >> N;
+    cin >> n;
 
     char ch = 'A';
 
-    for(int k = 1 ; k <= N ; k++ )
-        for(int i = k, j = N ; i <= N ; i++, j--)
+    for(k = 1 ; k <= n ; k++ )
+        for(i = k, j = n ; i <= n ; i++, j--)
             arr[i][j] = ch++;
     
-    for(int i = 1 ; i <= N ; i++){
-        for(int j = 1 ; j <= N ; j++){
-            if(arr[i][j]==0) printf(" ");
-            else printf("%c", arr[i][j]);
+    for(i = 1 ; i <= n ; i++){
+        for(j = 1 ; j <= n ; j++){
+            if(arr[i][j]==0) cout << " ";
+            else cout << arr[i][j] ;
         }
-        printf("\n");
+        cout << endl;
     }
     
     return 0;
