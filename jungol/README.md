@@ -1,1 +1,1 @@
-http://www.jungol.co.kr/xpert/
+http://www.jungol.co.kr/
