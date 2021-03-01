@@ -5,6 +5,7 @@ using namespace std;
 int input[10], gcd_n, lcm_n;
 
 int gcd(int a, int b){
+/*    
     int big, small, mod;
     big = a > b ? a : b;
     small = a < b ? a : b;
@@ -15,6 +16,10 @@ int gcd(int a, int b){
         return small;
     else
         gcd(small, mod);
+*/
+    if(b == 0)
+        return a;
+    return gcd(b, a % b);
 }
 
 int lcm(int a, int b){
@@ -33,5 +38,7 @@ int main(){
         gcd_n = gcd(gcd_n, input[i]);
         lcm_n = lcm(lcm_n, input[i]);
     }
-    cout << gcd_n << " " << lcm_n;
+    cout << gcd_n << " " << lcm_n << endl;
+
+    return 0;
 }
