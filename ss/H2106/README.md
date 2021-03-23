@@ -17,10 +17,9 @@
 이동 및 삭제가 이름만 주어지므로...이름에 대한 Hash 생성 필요
 이동에 타입이 주어지고 찾을 구간 및 이동할 구간이 주어지므로 linked list 가 필요함. 
 >> 구간에서의 삭제, 삽입이 이루어진다. 
->> 
 
 -----
-'''
+```
 int findName (도서명){
   return 구간명;
 }
@@ -43,4 +42,4 @@ int moveType(char mType[], int mFrom, int mTo){
     }
   }
 }
-'''
+```
