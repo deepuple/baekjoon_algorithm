@@ -23,8 +23,8 @@
 자료 형 정의 
 ```
 struct Book{
-  char[] name;
-  char[][] type;
+  char[7] name;
+  char[6][4] type;
   int section;
   Boot* np;
 }buf[100001], *hTbl[MOD+1], *head[101]  
