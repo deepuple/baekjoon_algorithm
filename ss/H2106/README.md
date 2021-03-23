@@ -26,7 +26,8 @@ struct Book{
   char[7] name;
   char[6][4] type;
   int section;
-  Boot* np;
+  Book* hash_np;
+  Book* list_np;
 }buf[100001], *hTbl[MOD+1], *head[101]  
 ```
 -----
