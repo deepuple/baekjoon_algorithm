@@ -19,6 +19,17 @@
 >> 구간에서의 삭제, 삽입이 이루어진다.   
 
 -----
+도서를 찾기 위한 문자열 해쉬 구현, 사실 중복이 없으므로 set으로 구현해도 되겠으나...
+자료 형 정의 
+```
+struct Book{
+  char[] name;
+  char[][] type;
+  int section;
+  Boot* np;
+}buf[100001], *hTbl[MOD+1], *head[101]  
+```
+-----
 ```
 int findName (도서명){
   return 구간명;
