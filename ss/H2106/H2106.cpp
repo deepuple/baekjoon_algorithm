@@ -20,14 +20,14 @@ int bufCnt;
 int secCnt[101];
 
 void mstrcpy(char dst[], const char src[]) {
-	int c = 0;
-	while ((dst[c] = src[c]) != '\0') ++c;
+    int c = 0;
+    while ((dst[c] = src[c]) != '\0') ++c;
 }
 
 int mstrcmp(const char str1[], const char str2[]) {
-	int c = 0;
-	while (str1[c] != '\0' && str1[c] == str2[c]) ++c;
-	return str1[c] - str2[c];
+    int c = 0;
+    while (str1[c] != '\0' && str1[c] == str2[c]) ++c;
+    return str1[c] - str2[c];
 }
 
 struct Book{
@@ -54,21 +54,21 @@ struct Book{
 }buf[100001], *hTbl[MOD+1], *head[101];
 
 unsigned long myhash(const char *str){
-	unsigned long hash = 5381;
+    unsigned long hash = 5381;
     int c;
-	while (c = *str++)	{
-		hash = (((hash << 5) + hash) + c) & MOD;
-	}
-	return hash % MOD;
+    while (c = *str++)	{
+        hash = (((hash << 5) + hash) + c) & MOD;
+    }
+    return hash % MOD;
 }
 
 Book* findBookWithName(const char *str){
-	unsigned long h = myhash(str);
+    unsigned long h = myhash(str);
     Book* ret = hTbl[h];
-	while (ret && mstrcmp(ret->name, str)!=0){
+    while (ret && mstrcmp(ret->name, str)!=0){
         ret = ret->hash_np;
-	}
-	return ret;
+    }
+    return ret;
 }
 
 void addBookInsec(Book* nb, int sec){
@@ -173,7 +173,7 @@ bool isFound(int typeCnt, char mType[MAX_N][MAX_TAG_LEN], int mTypeNum, char mTy
 
 int countBook(int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN], int mSection){
     Book* it = head[mSection];	
-	int cnt = 0;
+    int cnt = 0;
 
     while (it){
         if(isFound(it->typeCnt, it->type, mTypeNum, mTypes))
@@ -185,84 +185,84 @@ int countBook(int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN], int mSection){
 
 static bool run()
 {
-	int  Q;
-	int  cmd, M, mTypeNum, mSection, mFrom, mTo;
-	char mName[MAX_NAME_LEN], mType[MAX_TAG_LEN], mTypes[MAX_N][MAX_TAG_LEN];
-	
-	int  ret, ans;
-	
-	scanf("%d", &Q);
-		
-	bool okay = false;
-	
-	for (int q = 0; q <= Q; ++q)
-	{
-		scanf("%d", &cmd);
+    int  Q;
+    int  cmd, M, mTypeNum, mSection, mFrom, mTo;
+    char mName[MAX_NAME_LEN], mType[MAX_TAG_LEN], mTypes[MAX_N][MAX_TAG_LEN];
+    
+    int  ret, ans;
+    
+    scanf("%d", &Q);
+        
+    bool okay = false;
+    
+    for (int q = 0; q <= Q; ++q)
+    {
+        scanf("%d", &cmd);
 
-		switch(cmd)
-		{
-		case CMD_INIT:
-			scanf("%d", &M);
-			init(M);
-			okay = true;
-			break;
-		case CMD_ADD:
-			scanf("%s %d", mName, &mTypeNum);
-			for (int i = 0; i < mTypeNum; ++i)
-				scanf("%s", mTypes[i]);
-			scanf("%d", &mSection);
-			if (okay)
-				add(mName, mTypeNum, mTypes, mSection);
-			break;
-		case CMD_MOVETYPE:
-			scanf("%s %d %d", mType, &mFrom, &mTo);
-			if (okay)
-				ret = moveType(mType, mFrom, mTo);
-			scanf("%d", &ans);
-			if (ret != ans)
-				okay = false;
-			break;
-		case CMD_MOVENAME:
-			scanf("%s %d", mName, &mSection);
-			if (okay)
-				moveName(mName, mSection);
-			break;
-		case CMD_DELETENAME:
-			scanf("%s", mName);
-			if (okay)
-				deleteName(mName);
-			break;
-		case CMD_COUNTBOOK:
-			scanf("%d", &mTypeNum);
-			for (int i = 0; i < mTypeNum; ++i)
-				scanf("%s", mTypes[i]);
-			scanf("%d", &mSection);
-			if (okay)
-				ret = countBook(mTypeNum, mTypes, mSection);
-			scanf("%d", &ans);
-			if (ret != ans)
-				okay = false;
-			break;
-		}
-	}
-	
-	return okay;
+        switch(cmd)
+        {
+        case CMD_INIT:
+            scanf("%d", &M);
+            init(M);
+            okay = true;
+            break;
+        case CMD_ADD:
+            scanf("%s %d", mName, &mTypeNum);
+            for (int i = 0; i < mTypeNum; ++i)
+                scanf("%s", mTypes[i]);
+            scanf("%d", &mSection);
+            if (okay)
+                add(mName, mTypeNum, mTypes, mSection);
+            break;
+        case CMD_MOVETYPE:
+            scanf("%s %d %d", mType, &mFrom, &mTo);
+            if (okay)
+                ret = moveType(mType, mFrom, mTo);
+            scanf("%d", &ans);
+            if (ret != ans)
+                okay = false;
+            break;
+        case CMD_MOVENAME:
+            scanf("%s %d", mName, &mSection);
+            if (okay)
+                moveName(mName, mSection);
+            break;
+        case CMD_DELETENAME:
+            scanf("%s", mName);
+            if (okay)
+                deleteName(mName);
+            break;
+        case CMD_COUNTBOOK:
+            scanf("%d", &mTypeNum);
+            for (int i = 0; i < mTypeNum; ++i)
+                scanf("%s", mTypes[i]);
+            scanf("%d", &mSection);
+            if (okay)
+                ret = countBook(mTypeNum, mTypes, mSection);
+            scanf("%d", &ans);
+            if (ret != ans)
+                okay = false;
+            break;
+        }
+    }
+    
+    return okay;
 }
 
 int main()
 {
-	setbuf(stdout, NULL);
-	freopen("H2106_input.txt", "r", stdin);
+    setbuf(stdout, NULL);
+    freopen("H2106_input.txt", "r", stdin);
 
-	int T, MARK;
-	scanf("%d %d", &T, &MARK);
+    int T, MARK;
+    scanf("%d %d", &T, &MARK);
 
-	for (int tc = 1; tc <= T; tc++)
-	{
-		int score = run() ? MARK : 0;
-		
-		printf("#%d %d\n", tc, score);
-	}
+    for (int tc = 1; tc <= T; tc++)
+    {
+        int score = run() ? MARK : 0;
+        
+        printf("#%d %d\n", tc, score);
+    }
 
-	return 0;
+    return 0;
 }
