@@ -88,8 +88,9 @@ int deleteBookInSecWithName(int sec, char mName[]){
 
     while (it && it->list_np){
         if(mstrcmp(it->list_np->name, mName)==0){
-            it->list_np = it->list_np->list_np;
-            it->list_np->section = 0;
+            Book* target = it->list_np;
+            it->list_np = target->list_np;
+            target->section = 0;
             secCnt[sec]--;
             return 1;
         }
@@ -114,7 +115,7 @@ int moveType(char mType[MAX_TAG_LEN], int mFrom, int mTo){
     int movCnt=0;
 
     if(h){ //head
-        for(int i = 1 ; i <= MAX_N; i++){
+        for(int i = 0 ; i < MAX_N; i++){
             if(mstrcmp(h->type[i], mType)==0){
                 head[mFrom] = h->list_np;
                 secCnt[mFrom]--;
@@ -133,7 +134,7 @@ int moveType(char mType[MAX_TAG_LEN], int mFrom, int mTo){
     Book* it = head[mFrom];
     
     while (it && it->list_np){
-        for(int i = 1 ; i <= MAX_N; i++){
+        for(int i = 0 ; i < MAX_N; i++){
             if(mstrcmp(it->list_np->type[i], mType)==0){
                 Book* target = it->list_np;
                 it->list_np = target->list_np;
@@ -171,7 +172,7 @@ int countBook(int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN], int mSection){
 
     while (it && it->list_np){
         for(int i = 0 ; i < mTypeNum ; i++){
-            for(int j = 1 ; j <= MAX_N; i++){
+            for(int j = 0 ; j < MAX_N; j++){
                 if(mstrcmp(it->list_np->type[i], mTypes[j])==0){
                     cnt++;
                     break;
