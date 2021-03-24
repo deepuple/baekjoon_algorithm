@@ -87,8 +87,8 @@ int deleteBookInSecWithName(int sec, char mName[]){
     }
 
     while (it && it->list_np){
-        if(mstrcmp(it->list_np->name, mName)==0){
-            Book* target = it->list_np;
+        Book* target = it->list_np;
+        if(mstrcmp(target->name, mName)==0){
             it->list_np = target->list_np;
             target->section = 0;
             secCnt[sec]--;
@@ -134,9 +134,10 @@ int moveType(char mType[MAX_TAG_LEN], int mFrom, int mTo){
     Book* it = head[mFrom];
     
     while (it && it->list_np){
+        Book* target = it->list_np;
+        bool deleted = false;
         for(int i = 0 ; i < MAX_N; i++){
-            if(mstrcmp(it->list_np->type[i], mType)==0){
-                Book* target = it->list_np;
+            if(mstrcmp(target->type[i], mType)==0){
                 it->list_np = target->list_np;
                 secCnt[mFrom]--;
                 
@@ -146,10 +147,12 @@ int moveType(char mType[MAX_TAG_LEN], int mFrom, int mTo){
                 secCnt[mTo]++;
 
                 movCnt++;
+                deleted = true;
                 break;
             }
         }
-        it = it->list_np;
+        if(!deleted)
+            it = it->list_np;
     }
     
     return movCnt;
@@ -166,19 +169,24 @@ void deleteName(char mName[MAX_NAME_LEN]){
     deleteBookInSecWithName(b->section, mName);
 }
 
+bool isFound(int mTypeNum, char mType[MAX_N][MAX_TAG_LEN], char mTypes[MAX_N][MAX_TAG_LEN]){
+    for(int i = 0 ; i < MAX_N ; i++){
+        for(int j = 0 ; j < mTypeNum; j++){
+            if(mstrcmp(mType[i], mTypes[j])==0){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 int countBook(int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN], int mSection){
     Book* it = head[mSection];	
 	int cnt = 0;
 
-    while (it && it->list_np){
-        for(int i = 0 ; i < mTypeNum ; i++){
-            for(int j = 0 ; j < MAX_N; j++){
-                if(mstrcmp(it->list_np->type[i], mTypes[j])==0){
-                    cnt++;
-                    break;
-                }
-            }
-        }
+    while (it){
+        if(isFound(mTypeNum, it->type, mTypes))
+            cnt++;
         it = it->list_np;
     }
     
