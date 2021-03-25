@@ -46,9 +46,12 @@ struct Book{
         hash_np = p;
         return this;
     }
-    Book* list_np;
+    Book* list_next;
+    Book* list_prev;
     Book* list_assign(Book* p){
-        list_np = p;
+        list_next = p;
+        if(p)
+            p->list_prev = this;
         return this;
     }
 }buf[100001], *hTbl[MOD+1], *head[101];
@@ -72,10 +75,32 @@ Book* findBookWithName(const char *str){
 }
 
 void addBookInsec(Book* nb, int sec){
-    nb->list_np = head[sec];
+    nb->list_next = head[sec];
+    nb->list_prev = NULL;
+    if(head[sec])
+        head[sec]->list_prev = nb;
     nb->section = sec;
     head[sec] = nb;
     secCnt[sec]++;
+}
+
+int deleteBook(Book* p){
+    int sec = p->section;
+    if(p){
+        if(p->list_prev)
+            p->list_prev->list_next = p->list_next;
+        else //head
+            head[sec] = p->list_next;
+            
+        if(p->list_next)
+            p->list_next->list_prev = NULL;
+
+        p->list_next = NULL;
+        p->list_prev = NULL;
+        secCnt[sec]--;
+        return 1;
+    }
+    return 0;
 }
 
 int deleteBookInSecWithName(int sec, char mName[]){
@@ -83,19 +108,19 @@ int deleteBookInSecWithName(int sec, char mName[]){
 
     while(it){
         if(mstrcmp(it->name, mName)==0){//head
-            head[sec] = it->list_np;
+            head[sec] = it->list_next;
             secCnt[sec]--;
-            it->list_np = NULL;
+            it->list_next = NULL;
             it = head[sec];
             return 1;
-        }else if(it->list_np && mstrcmp(it->list_np->name, mName)==0){
-            Book* target = it->list_np;
-            it->list_np = target->list_np;
-            target->list_np = NULL;
+        }else if(it->list_next && mstrcmp(it->list_next->name, mName)==0){
+            Book* target = it->list_next;
+            it->list_next = target->list_next;
+            target->list_next = NULL;
             secCnt[sec]--;
             return 1;
         }else
-            it = it->list_np;
+            it = it->list_next;
     }
     return 0;
 }
@@ -131,33 +156,34 @@ int moveType(char mType[MAX_TAG_LEN], int mFrom, int mTo){
     int movCnt=0;
     while(it){
         if(isTypeFound(it, mType)){ //head
-            head[mFrom] = it->list_np;
+            head[mFrom] = it->list_next;
             secCnt[mFrom]--;
             addBookInsec(it, mTo);
             it = head[mFrom];
             movCnt++;
-        }else if(it->list_np && isTypeFound(it->list_np, mType)){
-            Book* tmp = it->list_np;
-            it->list_np = tmp->list_np;
+        }else if(it->list_next && isTypeFound(it->list_next, mType)){
+            Book* tmp = it->list_next;
+            it->list_next = tmp->list_next;
             secCnt[mFrom]--;
             addBookInsec(tmp, mTo);
             movCnt++;
         }else
-            it = it->list_np;
+            it = it->list_next;
     }
     return movCnt;
 }
 
-
 void moveName(char mName[MAX_NAME_LEN], int mSection){
     Book* b = findBookWithName(mName);
-    deleteBookInSecWithName(b->section, mName);
+    //deleteBookInSecWithName(b->section, mName);
+    deleteBook(b);
     addBookInsec(b, mSection);
 }
 
 void deleteName(char mName[MAX_NAME_LEN]){
     Book* b = findBookWithName(mName);
-    deleteBookInSecWithName(b->section, mName);
+    deleteBook(b);
+    //deleteBookInSecWithName(b->section, mName);
 }
 
 bool isFound(int typeCnt, char mType[MAX_N][MAX_TAG_LEN], int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN]){
@@ -178,7 +204,7 @@ int countBook(int mTypeNum, char mTypes[MAX_N][MAX_TAG_LEN], int mSection){
     while (it){
         if(isFound(it->typeCnt, it->type, mTypeNum, mTypes))
             cnt++;
-        it = it->list_np;
+        it = it->list_next;
     }
     return cnt;
 }
