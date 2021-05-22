@@ -130,7 +130,6 @@ unsigned long str_to_id(const char *str) //str 비교 쓰기 싫을때
 void push(int v){
     Node* n = pq[pIdx++] = alloc();
     n->val = v;
-    pIdx++;
     update(pIdx-1);
 }
 
